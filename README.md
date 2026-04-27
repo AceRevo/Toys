@@ -1,1 +1,3 @@
-<img width="320" height="180" alt="GATO_sacando_el_DEDO_DEL_MEDIO_con_sonido_SHITPOST" src="https://github.com/user-attachments/assets/85562eba-6cf9-4206-9f64-900d89513c49" />
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a06d0ebd-32d0-4de4-88e8-b3cc9dc886ea" width="100%" alt="Gato Shitpost">
+</div>
