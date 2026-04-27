@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimedia X</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #050505; /* Negro profundo */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Capa que cubre todo para forzar el clic */
+        #capa-interaccion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        /* Estilo del contenedor de la calavera */
+        .skull-container {
+            font-size: 120px;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+            animation: latido 2s infinite;
+        }
+
+        .skull-container:hover {
+            color: #ff0000; /* Se vuelve roja al pasar el mouse */
+            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
+            transform: scale(1.1);
+        }
+
+        /* Animación de latido para que la persona sepa que debe clickar */
+        @keyframes latido {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .texto-click {
+            color: #555;
+            margin-top: 20px;
+            letter-spacing: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        video {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover; /* Cambia a 'contain' si prefieres ver el video completo sin recortes */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="capa-interaccion">
+        <div class="skull-container">
+            <i class="fa-solid fa-skull-crossbones"></i>
+        </div>
+        <p class="texto-click">Presiona para entrar</p>
+    </div>
+
+    <video id="miVideo" playsinline>
+        <source src="assets/video.mp4" type="video/mp4">
+        Tu navegador no soporta video.
+    </video>
+
+    <script>
+        const video = document.getElementById('miVideo');
+        const capa = document.getElementById('capa-interaccion');
+
+        // Escuchar el clic en cualquier parte de la capa negra
+        capa.addEventListener('click', () => {
+            // 1. Activar Pantalla Completa
+            entrarPantallaCompleta(document.documentElement);
+
+            // 2. Cambiar visibilidad
+            capa.style.display = 'none';
+            video.style.display = 'block';
+
+            // 3. Reproducir multimedia
+            video.play().catch(error => {
+                console.log("Error al reproducir: ", error);
+            });
+        });
+
+        function entrarPantallaCompleta(elem) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari/Chrome */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+
+        // Si el video termina, el usuario puede salir de pantalla completa
+        video.onended = () => {
+            if (document.exitFullscreen) document.exitFullscreen();
+        };
+    </script>
+</body>
+</html>
